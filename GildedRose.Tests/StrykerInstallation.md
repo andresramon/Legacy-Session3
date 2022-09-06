@@ -5,3 +5,7 @@ dotnet tool restore
 ## Install from scratch in Project
 dotnet new tool-manifest
 dotnet tool install dotnet-stryker
+
+## How to run 
+
+In the console use : ```dotnet stryker```
