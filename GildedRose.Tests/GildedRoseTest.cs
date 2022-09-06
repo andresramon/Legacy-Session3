@@ -15,57 +15,69 @@ namespace GildedRose.Tests
         [Fact]
         public void DecrementQualityOnce()
         {
-            var item = new Item {Name = "TestOneItem", SellIn = 10, Quality = 20};
-            IList<Item> Items = new List<Item>{
-                item,
-            };
-           
-            var app = new GildedRoseKata.GildedRose(Items);
-            app.UpdateQuality();
-            int expected = 19;
-            Assert.Equal(expected,item.Quality);
+            CheckQuality("TestOneItem", 10, 20, 19);
+          
         }
 
         [Fact]
         public void NotDecrementQualityWhenZero()
         {
-            var item = new Item {Name = "TestOneItem", SellIn = 10, Quality = 0};
-            IList<Item> Items = new List<Item>{
-                item,
-            };
-           
-            var app = new GildedRoseKata.GildedRose(Items);
-            app.UpdateQuality();
-            int expected = 0;
-            Assert.Equal(expected,item.Quality); 
+            CheckQuality("TestOneItem", 10, 0,0);
+        
         }
         
         [Fact]
         public void AgedBrieQualityIncreaseWithTime()
         {
-            var item = new Item {Name = "Aged Brie", SellIn = 10, Quality = 0};
-            IList<Item> Items = new List<Item>{
-                item,
-            };
-           
-            var app = new GildedRoseKata.GildedRose(Items);
-            app.UpdateQuality();
-            int expected = 1;
-            Assert.Equal(expected,item.Quality); 
+            CheckQuality("Aged Brie", 10, 0, 1);
+          
         } 
         
         [Fact]
         public void BackstageQualityIncreaseTwiceWithTimeWhenSellInIsFive()
         {
-            var item = new Item {Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 5, Quality = 0};
+            CheckQuality("Backstage passes to a TAFKAL80ETC concert", 5, 0, 3);
+        }
+        
+        [Fact]
+        public void SulfurasSellInNoChanges()
+        {
+            var item = new Item {Name = "Sulfuras, Hand of Ragnaros", SellIn = 5, Quality = 80};
             IList<Item> Items = new List<Item>{
                 item,
             };
            
             var app = new GildedRoseKata.GildedRose(Items);
             app.UpdateQuality();
-            int expected = 3;
-            Assert.Equal(expected,item.Quality); 
+            int expected = 5;
+            Assert.Equal(expected,item.SellIn); 
+        }
+
+        [Fact]
+        public void NoSulfurasSellInChanges()
+        {
+            var item = new Item {Name = "Other", SellIn = 5, Quality = 80};
+            IList<Item> Items = new List<Item>{
+                item,
+            };
+           
+            var app = new GildedRoseKata.GildedRose(Items);
+            app.UpdateQuality();
+            int expected = 4;
+            Assert.Equal(expected,item.SellIn); 
+        }
+        private static void CheckQuality(string nameItem, int sellIn, int quality, int expectedQuality )
+        {
+            var item = new Item { Name = nameItem, SellIn = sellIn, Quality = quality };
+            IList<Item> Items = new List<Item>
+            {
+                item,
+            };
+
+            var app = new GildedRoseKata.GildedRose(Items);
+            app.UpdateQuality();
+            int expected = expectedQuality;
+            Assert.Equal(expected, item.Quality);
         }
 
         [Theory]
@@ -155,32 +167,6 @@ namespace GildedRose.Tests
             Assert.Equal(expected,item.Quality);
         }
         
-        [Fact]
-        public void SulfurasSellInNoChanges()
-        {
-            var item = new Item {Name = "Sulfuras, Hand of Ragnaros", SellIn = 5, Quality = 80};
-            IList<Item> Items = new List<Item>{
-                item,
-            };
-           
-            var app = new GildedRoseKata.GildedRose(Items);
-            app.UpdateQuality();
-            int expected = 5;
-            Assert.Equal(expected,item.SellIn); 
-        }
-
-        [Fact]
-        public void NoSulfurasSellInChanges()
-        {
-            var item = new Item {Name = "Other", SellIn = 5, Quality = 80};
-            IList<Item> Items = new List<Item>{
-                item,
-            };
-           
-            var app = new GildedRoseKata.GildedRose(Items);
-            app.UpdateQuality();
-            int expected = 4;
-            Assert.Equal(expected,item.SellIn); 
-        }
+        
     }
 }
