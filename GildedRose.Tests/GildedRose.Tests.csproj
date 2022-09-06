@@ -14,4 +14,8 @@
   <ItemGroup>
     <ProjectReference Include="..\GildedRose\GildedRose.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Content Include=".config\dotnet-tools.json" />
+  </ItemGroup>
 </Project>
