@@ -6,7 +6,6 @@ Practice adding Characterization tests and do some manual mutation to test the b
 
 ## Original Specs
 
-======================================
 Gilded Rose Requirements Specification
 ======================================
 
